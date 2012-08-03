@@ -22,13 +22,13 @@ header( "Content-type: text/xml");
 // III bib number.  example: b4000442
 $_GET['bib_no'] = trim( $_GET['bib_no']);
 
-// get the json
+// get the items 
 $items = iii_avail( $_GET['bib_no']);
 
 // start the xml for output
 $xml = new SimpleXMLElement('<work-availability></work-availability>');
 
-// go thru the json, and add to the xml
+// go thru the items, and add to the xml
 foreach ( $items as $item) {
   $shelfmark_location = $xml->addChild('shelfmark-location-availability');
   $work_id = $shelfmark_location->addChild('work-id', $_GET['bib_no']);
@@ -90,13 +90,13 @@ function iii_avail($bib_no = NULL, $max_return = 100) {
 
           $value = trim(str_replace("&nbsp;", " ", strip_tags($details[$i][0])));
 
-          // add to the json we'll be returning 
+          // add to the items we'll be returning 
           $field[$label] = $value;
           $field['bibno'] = $bib_no;
 
         }
 
-        // add to the json we'll be returning 
+        // add to the items we'll be returning 
         $items[] = $field;
         
         if ( $j >= $max_return) {
